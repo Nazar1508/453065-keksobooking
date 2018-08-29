@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Назар Колцун](https://up.htmlacademy.ru/javascript/15/user/453065).
-* Наставник: `Неизвестно`.
+* Наставник: [Максим Сёмушкин](https://up.htmlacademy.ru/javascript/15/user/48647).
 
 ---
 
