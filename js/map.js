@@ -61,9 +61,9 @@ var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
 
-document.querySelector('.map').classList.remove('map--faded');
 
 (function () {
+
   var infoList = [];
 
   var similarPinsElement = document.querySelector('.map__pins');
@@ -71,6 +71,8 @@ document.querySelector('.map').classList.remove('map--faded');
 
   var similarCardElement = document.querySelector('.map');
   var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
+
+  var cardElement = similarCardTemplate.cloneNode(true);
 
   // Создаем функцию для создания случайных чисел
   var randomInteger = function (min, max) {
@@ -161,13 +163,11 @@ document.querySelector('.map').classList.remove('map--faded');
       fragment.appendChild(pinsElement);
     }
 
-    similarPinsElement.appendChild(fragment);
   };
 
-  createPins(infoList);
+  // createPins(infoList);
 
   var createCard = function (array) {
-    var cardElement = similarCardTemplate.cloneNode(true);
     var offer = array[0].offer;
     cardElement.querySelector('img').src = array[randomInteger(0, infoList.length - 1)].author.avatar;
     cardElement.querySelector('.popup__title').textContent = offer.title;
@@ -183,7 +183,75 @@ document.querySelector('.map').classList.remove('map--faded');
     similarCardElement.appendChild(cardElement);
     cardElement.querySelector('.popup__features').appendChild(createFeatures(offer.features));
     cardElement.querySelector('.popup__photos').appendChild(createPhotos(offer.photos));
+    return cardElement;
   };
 
-  createCard(infoList);
+  // createCard(infoList);
+
+  var form = document.querySelector('.ad-form');
+  var addFormElements = document.querySelectorAll('fieldset, select');
+  var mapPinActive = document.querySelector('.map__pin--main');
+  form.querySelector('.ad-form__element:nth-child(3) input').value = parseInt(mapPinActive.style.top, 15) + ', ' + parseInt(mapPinActive.style.left, 15);
+
+  mapPinActive.addEventListener('mouseup', function () {
+    document.querySelector('.map').classList.remove('map--faded');
+    form.classList.remove('ad-form--disabled');
+
+    form.querySelector('.ad-form__element:nth-child(3) input').value = parseInt(mapPinActive.style.top, 15) + ', ' + parseInt(mapPinActive.style.left, 15);
+
+    for (var i = 0; i < addFormElements.length; i++) {
+      addFormElements[i].disabled = false;
+    }
+
+    createPins(infoList);
+    similarPinsElement.appendChild(fragment);
+  });
+
+  mapPinActive.addEventListener('mousedown', function (evt) {
+    var startPositin = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvent) {
+      var changePosition = {
+        x: startPositin.x - moveEvent.clientX,
+        y: startPositin.y - moveEvent.clientY,
+      };
+
+      startPositin = {
+        x: moveEvent.clientX,
+        y: moveEvent.clientY
+      };
+
+      mapPinActive.style.top = (mapPinActive.offsetTop - changePosition.y) + 'px';
+      mapPinActive.style.left = (mapPinActive.offsetLeft - changePosition.x) + 'px';
+    };
+
+    var onMouseUp = function () {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
+
+  });
+
+  similarPinsElement.addEventListener('click', function (evt) {
+    var target = evt.target;
+    if (target.tagName === 'BUTTON') {
+      createCard(infoList);
+      cardElement.classList.remove('hidden');
+    } else if (target.tagName === 'IMG') {
+      createCard(infoList);
+      cardElement.classList.remove('hidden');
+    }
+  });
+
+  cardElement.querySelector('.popup__close').addEventListener('click', function () {
+    cardElement.classList.add('hidden');
+  });
+
 }());
