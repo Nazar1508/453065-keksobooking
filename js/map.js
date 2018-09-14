@@ -254,4 +254,37 @@ var PHOTOS = [
     cardElement.classList.add('hidden');
   });
 
+  var roomNumber = form.querySelector('#room_number');
+  var roomNumberElement = form.querySelectorAll('#room_number > option');
+  var roomCapacity = form.querySelectorAll('#capacity > option');
+
+  roomNumber.addEventListener('click', function () {
+    for (var i = 0; i < roomNumber.length; i++) {
+      if (roomNumberElement[i].selected && roomNumberElement[i].value === '1') {
+        roomCapacity[0].disabled = true;
+        roomCapacity[1].disabled = true;
+        roomCapacity[2].disabled = false;
+        roomCapacity[3].disabled = true;
+        roomCapacity[2].selected = 'true';
+      } else if (roomNumberElement[i].selected && roomNumberElement[i].value === '2') {
+        roomCapacity[0].disabled = true;
+        roomCapacity[1].disabled = false;
+        roomCapacity[2].disabled = false;
+        roomCapacity[3].disabled = true;
+        roomCapacity[2].selected = 'true';
+      } else if (roomNumberElement[i].selected && roomNumberElement[i].value === '3') {
+        roomCapacity[0].disabled = false;
+        roomCapacity[1].disabled = false;
+        roomCapacity[2].disabled = false;
+        roomCapacity[3].disabled = true;
+        roomCapacity[2].selected = 'true';
+      } else if (roomNumberElement[i].selected && roomNumberElement[i].value === '100') {
+        roomCapacity[0].disabled = true;
+        roomCapacity[1].disabled = true;
+        roomCapacity[2].disabled = true;
+        roomCapacity[3].disabled = false;
+        roomCapacity[3].selected = 'true';
+      }
+    }
+  });
 }());
