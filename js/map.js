@@ -1,7 +1,7 @@
 'use strict';
 
-var MIN_X = 0;
-var MAX_X = 1050;
+var MIN_X = 50;
+var MAX_X = 1085;
 var MIN_Y = 130;
 var MAX_Y = 630;
 var MIN_PRICE = 1000;
@@ -197,7 +197,7 @@ var PHOTOS = [
     document.querySelector('.map').classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
 
-    form.querySelector('.ad-form__element:nth-child(3) input').value = parseInt(mapPinActive.style.top, 15) + ', ' + parseInt(mapPinActive.style.left, 15);
+    form.querySelector('.ad-form__element:nth-child(3) input').value = parseInt(mapPinActive.style.top, 10) + ', ' + parseInt(mapPinActive.style.left, 10);
 
     for (var i = 0; i < addFormElements.length; i++) {
       addFormElements[i].disabled = false;
@@ -224,8 +224,23 @@ var PHOTOS = [
         y: moveEvent.clientY
       };
 
-      mapPinActive.style.top = (mapPinActive.offsetTop - changePosition.y) + 'px';
-      mapPinActive.style.left = (mapPinActive.offsetLeft - changePosition.x) + 'px';
+      var coordinateLimits = function () {
+        if (mapPinActive.offsetTop - changePosition.y < MIN_Y) {
+          mapPinActive.style.top = MIN_Y + 'px';
+        } else if (mapPinActive.offsetTop - changePosition.y > MAX_Y) {
+          mapPinActive.style.top = MAX_Y + 'px';
+        }
+        mapPinActive.style.top = (mapPinActive.offsetTop - changePosition.y) + 'px';
+
+        if (mapPinActive.offsetLeft - changePosition.x < MIN_X) {
+          mapPinActive.style.left = MIN_X + 'px';
+        } else if (mapPinActive.offsetLeft - changePosition.x > MAX_X) {
+          mapPinActive.style.left = MAX_X + 'px';
+        }
+        mapPinActive.style.left = (mapPinActive.offsetLeft - changePosition.x) + 'px';
+      };
+
+      coordinateLimits();
     };
 
     var onMouseUp = function () {
