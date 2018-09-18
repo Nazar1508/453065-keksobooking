@@ -17,8 +17,8 @@
       addFormElements[i].disabled = false;
     }
 
-    window.map.createPins(window.infoList);
-    window.similarPinsElement.appendChild(window.fragment);
+    window.map.createPins(window.map.infoList);
+    window.map.similarPinsElement.appendChild(window.map.fragment);
   });
 
   mapPinActive.addEventListener('mousedown', function (evt) {
@@ -39,17 +39,17 @@
       };
 
       var coordinateLimits = function () {
-        if (mapPinActive.offsetTop - changePosition.y < window.MIN_Y) {
-          mapPinActive.style.top = window.MIN_Y + 'px';
-        } else if (mapPinActive.offsetTop - changePosition.y > window.MAX_Y) {
-          mapPinActive.style.top = window.MAX_Y + 'px';
+        if (mapPinActive.offsetTop - changePosition.y < window.map.MIN_Y) {
+          mapPinActive.style.top = window.map.MIN_Y + 'px';
+        } else if (mapPinActive.offsetTop - changePosition.y > window.map.MAX_Y) {
+          mapPinActive.style.top = window.map.MAX_Y + 'px';
         }
         mapPinActive.style.top = (mapPinActive.offsetTop - changePosition.y) + 'px';
 
-        if (mapPinActive.offsetLeft - changePosition.x < window.MIN_X) {
-          mapPinActive.style.left = window.MIN_X + 'px';
-        } else if (mapPinActive.offsetLeft - changePosition.x > window.MAX_X) {
-          mapPinActive.style.left = window.MAX_X + 'px';
+        if (mapPinActive.offsetLeft - changePosition.x < window.map.MIN_X) {
+          mapPinActive.style.left = window.map.MIN_X + 'px';
+        } else if (mapPinActive.offsetLeft - changePosition.x > window.map.MAX_X) {
+          mapPinActive.style.left = window.map.MAX_X + 'px';
         }
         mapPinActive.style.left = (mapPinActive.offsetLeft - changePosition.x) + 'px';
       };
@@ -68,19 +68,19 @@
 
   });
 
-  window.similarPinsElement.addEventListener('click', function (evt) {
+  window.map.similarPinsElement.addEventListener('click', function (evt) {
     var target = evt.target;
     if (target.tagName === 'BUTTON') {
-      window.map.createCard(window.infoList);
-      window.cardElement.classList.remove('hidden');
+      window.map.createCard(window.map.infoList);
+      window.map.cardElement.classList.remove('hidden');
     } else if (target.tagName === 'IMG') {
-      window.map.createCard(window.infoList);
-      window.cardElement.classList.remove('hidden');
+      window.map.createCard(window.map.infoList);
+      window.map.cardElement.classList.remove('hidden');
     }
   });
 
-  window.cardElement.querySelector('.popup__close').addEventListener('click', function () {
-    window.cardElement.classList.add('hidden');
+  window.map.cardElement.querySelector('.popup__close').addEventListener('click', function () {
+    window.map.cardElement.classList.add('hidden');
   });
 
   var roomNumber = form.querySelector('#room_number');

@@ -13,11 +13,6 @@
   var MIN_GUESTS = 2;
   var MAX_GUESTS = 10;
 
-  window.MIN_X = MIN_X;
-  window.MAX_X = MAX_X;
-  window.MIN_Y = MIN_Y;
-  window.MAX_Y = MAX_Y;
-
   var AVATARS = [
     'img/avatars/user01.png',
     'img/avatars/user02.png',
@@ -69,11 +64,8 @@
   ];
 
   var infoList = [];
-  window.infoList = infoList;
-
 
   var similarPinsElement = document.querySelector('.map__pins');
-  window.similarPinsElement = similarPinsElement;
 
   var similarPinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -81,13 +73,19 @@
   var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   var cardElement = similarCardTemplate.cloneNode(true);
-  window.cardElement = cardElement;
 
   var fragment = document.createDocumentFragment();
-  window.fragment = fragment;
-
 
   window.map = {
+
+    MIN_X: MIN_X,
+    MAX_X: MAX_X,
+    MIN_Y: MIN_Y,
+    MAX_Y: MAX_Y,
+    infoList: infoList,
+    similarPinsElement: similarPinsElement,
+    cardElement: cardElement,
+    fragment: fragment,
 
     createPins: function (array) {
       for (var i = 0; i < 8; i++) {
