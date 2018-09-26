@@ -117,7 +117,7 @@
         </fieldset>
         <fieldset class="ad-form__element" disabled>
           <label class="ad-form__label" for="price">Цена за ночь, руб.</label>
-          <input id="price" name="price" max="1000000" type="number" placeholder="5000" required>
+          <input id="price" name="price" max="1000000" min="1000" type="number" placeholder="5000" required>
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--time" disabled>
           <label class="ad-form__label" for="timein">Время заезда и выезда</label>
@@ -187,6 +187,10 @@
     </section>
   </main>
 
+  <div class="success hidden">
+    <p class="success__message">Ваше объявление<br>успешно размещено!</p>
+  </div>
+
   <footer class="footer container">
     <div class="footer__copyright copyright">
       <a class="copyright__link copyright__link--image" href="https://htmlacademy.ru/intensive/javascript">
@@ -248,9 +252,13 @@
     </div>
   </template>
 
+  <script src="js/error.js"></script>
+  <script src="js/card.js"></script>
+  <script src="js/pins.js"></script>
   <script src="js/data.js"></script>
   <script src="js/map.js"></script>
   <script src="js/form.js"></script>
+  <script src="js/backend.js"></script>
 
 </body>
 </html>
