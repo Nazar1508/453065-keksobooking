@@ -9,18 +9,35 @@
   var similarPinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
   window.pins = {
-    createPins: function (array) {
+    pinsData: [],
+
+    createPins: function (array, pinsQuantity) {
+
+      window.pins.pinsData = array.sort(window.data.sortElements).filter(function (pin, index) {
+        return index < pinsQuantity;
+      });
+
       var fragment = document.createDocumentFragment();
-      for (var i = 0; i < 8; i++) {
+      for (var i = 0; i < window.pins.pinsData.length; i++) {
         var pinsElement = similarPinsTemplate.cloneNode(true);
-        pinsElement.style = 'left: ' + parseInt(array[i].location.x, 10) + 'px; top: ' + parseInt(array[i].location.y, 10) + 'px';
+        pinsElement.style = 'left: ' + parseInt(window.pins.pinsData[i].location.x, 10) + 'px; top: ' + parseInt(window.pins.pinsData[i].location.y, 10) + 'px';
         pinsElement.querySelector('img').src = array[i].author.avatar;
+        pinsElement.classList.add('user__pin');
         pinsElement.id = i;
         pinsElement.alt = 'Метка объявления';
 
         fragment.appendChild(pinsElement);
       }
       return fragment;
+    },
+
+    removePins: function () {
+      var mapPin = window.map.similarPinsElement.querySelectorAll('button');
+      mapPin.forEach(function (el) {
+        if (el.className !== 'map__pin map__pin--main') {
+          window.map.similarPinsElement.removeChild(el);
+        }
+      });
     },
 
     MIN_X: MIN_X,

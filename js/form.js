@@ -2,6 +2,12 @@
 
 (function () {
 
+  var housingData = [];
+
+  window.form = {
+    housingData: housingData
+  };
+
   var form = document.querySelector('.ad-form');
   var addFormElements = document.querySelectorAll('fieldset, select');
   var mapPinActive = document.querySelector('.map__pin--main');
@@ -17,10 +23,14 @@
       addFormElements[i].disabled = false;
     }
 
+
     var successHandlerForPins = function (data) {
-      window.map.similarPinsElement.appendChild(window.pins.createPins(data));
+      window.form.housingData = data;
+      window.map.similarPinsElement.appendChild(window.pins.createPins(window.form.housingData, 5));
     };
+
     window.backend.download(successHandlerForPins, window.error.errorHandler);
+
   });
 
   mapPinActive.addEventListener('mousedown', function (evt) {
@@ -28,8 +38,6 @@
       x: evt.clientX,
       y: evt.clientY
     };
-
-    window.startPositin = startPositin;
 
     var onMouseMove = function (moveEvent) {
       var changePosition = {
@@ -144,18 +152,9 @@
       addFormElements[n].disabled = true;
     }
 
-    var removePins = function () {
-      var mapPin = window.map.similarPinsElement.querySelectorAll('button');
-      mapPin.forEach(function (el) {
-        if (el.className !== 'map__pin map__pin--main') {
-          window.map.similarPinsElement.removeChild(el);
-        }
-      });
-    };
+    window.pins.removePins();
 
-    removePins();
-
-    document.querySelector('.map__card').classList.add('hidden');
+    window.card.removeCard();
 
     form.querySelector('#type').selected = true;
     form.querySelector('#price').value = '';
@@ -193,5 +192,6 @@
     resetForm();
     evt.preventDefault();
   });
+
 
 })();

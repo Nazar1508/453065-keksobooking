@@ -1,25 +1,19 @@
 'use strict';
 
 (function () {
+
+  var DEBOUNCE_INTERVAL = 500;
+  var lastTimeout;
+
   window.data = {
 
-    // Создаем функцию для создания случайных чисел
-    randomInteger: function (min, max) {
-      var rand = min - 0.5 + Math.random() * (max - min + 1);
-      rand = Math.round(rand);
-      return rand;
-    },
-
-    // Создаем функцию для возврата случайного свойства из объекта
-    randomProperty: function (obj) {
-      var keys = Object.keys(obj);
-      return obj[keys [keys.length * Math.random() << 0]];
-    },
-
-    // Создаем функцию, которая будет возвращать случайную количество элементов из массива
-    getRandomELements: function (array) {
-      var randomElements = array.slice(0, window.data.randomInteger(1, array.length));
-      return randomElements;
+    debounce: function (fun, filteredPins) {
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        fun(filteredPins);
+      }, DEBOUNCE_INTERVAL);
     },
 
     // Создаем функцию для случайной сортировки елементов масива
