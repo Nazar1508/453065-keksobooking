@@ -9,14 +9,18 @@
     similarPinsElement: similarPinsElement,
   };
 
+  var showTheCard = function (obj) {
+    map.appendChild(window.card.createCard(obj));
+  };
+
   similarPinsElement.addEventListener('click', function (evt) {
     var target = evt.target;
 
-    var successHandlerForCard = function (data) {
+    var successHandlerForCard = function () {
       if (target.tagName === 'BUTTON') {
-        map.appendChild(window.card.createCard(data[target.id]));
+        showTheCard(window.pins.pinsData[target.id]);
       } else if (target.tagName === 'IMG') {
-        map.appendChild(window.card.createCard(data[target.parentElement.id]));
+        showTheCard(window.pins.pinsData[target.parentElement.id]);
       }
     };
     window.backend.download(successHandlerForCard, window.error.errorHandler);

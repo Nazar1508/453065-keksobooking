@@ -187,9 +187,6 @@
     </section>
   </main>
 
-  <div class="success hidden">
-    <p class="success__message">Ваше объявление<br>успешно размещено!</p>
-  </div>
 
   <footer class="footer container">
     <div class="footer__copyright copyright">
@@ -205,6 +202,15 @@
       <li><a href="https://vk.com/htmlacademy" class="contacts__link contacts__link--vk">VK</a></li>
     </ul>
   </footer>
+
+  <div class="success hidden">
+    <p class="success__message">Ваше объявление<br>успешно размещено!</p>
+  </div>
+
+  <div class="error hidden">
+    <p class="error__message">Ошибка загрузки объявления</p>
+    <button class="error__button" href="#">Попробовать снова</button>
+  </div>
 
   <!-- Модальное окно с информацией об объявлении -->
   <template id="card">
@@ -252,13 +258,14 @@
     </div>
   </template>
 
-  <script src="js/error.js"></script>
   <script src="js/card.js"></script>
-  <script src="js/pins.js"></script>
+  <script src="js/filters.js"></script>
   <script src="js/data.js"></script>
-  <script src="js/map.js"></script>
-  <script src="js/form.js"></script>
+  <script src="js/pins.js"></script>
   <script src="js/backend.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/error.js"></script>
+  <script src="js/map.js"></script>
 
 </body>
 </html>

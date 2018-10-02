@@ -3,7 +3,10 @@
 (function () {
   var GET_URL = 'https://js.dump.academy/keksobooking/data';
   var POST_URL = 'https://js.dump.academy/keksobooking';
+
   var successSend = document.querySelector('.success');
+  var error = document.querySelector('.error');
+  var errorButton = document.querySelector('.error__button');
 
   var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -19,7 +22,7 @@
     });
 
     xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединеия');
+      onError(error.classList.remove('hidden'));
     });
 
     xhr.addEventListener('timeout', function () {
@@ -55,12 +58,16 @@
 
   successSend.addEventListener('click', function () {
     successSend.classList.add('hidden');
+  });
 
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === 27) {
-        successSend.classList.add('hidden');
-      }
-    });
+  errorButton.addEventListener('click', function () {
+    error.classList.add('hidden');
+  });
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      successSend.classList.add('hidden');
+      error.classList.add('hidden');
+    }
   });
 
 })();

@@ -31,7 +31,16 @@
       cardElement.querySelector('.popup__close').addEventListener('click', function () {
         cardElement.classList.add('hidden');
       });
+      document.addEventListener('keydown', function (evt) {
+        if (evt.keyCode === 27) {
+          cardElement.classList.add('hidden');
+        }
+      });
       return cardElement;
     },
+
+    removeCard: function () {
+      cardElement.classList.add('hidden');
+    }
   };
 })();
