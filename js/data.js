@@ -4,7 +4,6 @@
 
   var DEBOUNCE_INTERVAL = 500;
   var lastTimeout;
-
   window.data = {
 
     debounce: function (fun, filteredPins) {

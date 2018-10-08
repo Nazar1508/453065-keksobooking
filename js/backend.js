@@ -14,7 +14,7 @@
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        successSend.classList.remove('hidden');
+        openSuccess();
         onLoad(xhr.response);
       } else {
         onError('Не известный статус: ' + xhr.status + ' ' + xhr.statusText);
@@ -22,7 +22,7 @@
     });
 
     xhr.addEventListener('error', function () {
-      onError(error.classList.remove('hidden'));
+      onError(openErrorButton());
     });
 
     xhr.addEventListener('timeout', function () {
@@ -40,6 +40,7 @@
 
     xhr.addEventListener('load', function () {
       onLoad(xhr.response);
+      window.form.activateForm();
     });
 
     xhr.addEventListener('error', function () {
@@ -56,18 +57,48 @@
     download: download,
   };
 
-  successSend.addEventListener('click', function () {
-    successSend.classList.add('hidden');
-  });
-
-  errorButton.addEventListener('click', function () {
-    error.classList.add('hidden');
-  });
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27) {
-      successSend.classList.add('hidden');
-      error.classList.add('hidden');
+  var onSuccessEscPress = function (evt) {
+    if (evt.keyCode === window.map.ESC_KEYCODE) {
+      closeSuccess();
     }
-  });
+  };
+
+  var openSuccess = function () {
+    successSend.classList.remove('hidden');
+
+    document.addEventListener('keydown', onSuccessEscPress);
+  };
+
+  var closeSuccess = function () {
+    successSend.classList.add('hidden');
+    document.removeEventListener('keydown', onSuccessEscPress);
+  };
+
+  successSend.addEventListener('click', closeSuccess);
+
+  var onErrorEscPress = function (evt) {
+    if (evt.keyCode === window.map.ESC_KEYCODE) {
+      closeErrorButton();
+    }
+  };
+
+  var openErrorButton = function () {
+    error.classList.remove('hidden');
+    document.addEventListener('keydown', onErrorEscPress);
+  };
+
+  var closeErrorButton = function () {
+    error.classList.add('hidden');
+    document.removeEventListener('keydown', onErrorEscPress);
+  };
+
+  errorButton.addEventListener('click', closeErrorButton);
+  //   error.classList.add('hidden');
+  // });
+  // document.addEventListener('keydown', function (evt) {
+  //   if (evt.keyCode === 27) {
+  //     error.classList.add('hidden');
+  //   }
+  // });
 
 })();

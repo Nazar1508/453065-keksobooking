@@ -46,7 +46,7 @@
       });
 
       if (!isImage) {
-        window.message.showMessage('Только изображения ' + FILE_TYPES);
+        window.error.errorHandler('Только изображения ' + FILE_TYPES);
         break;
       }
     }

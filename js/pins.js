@@ -1,15 +1,15 @@
 'use strict';
 
 (function () {
-  var MIN_X = 50;
-  var MAX_X = 1085;
-  var MIN_Y = 130;
-  var MAX_Y = 630;
+  var MIN_X = 0;
+  var MAX_X = 1136;
+  var MIN_Y = 100;
+  var MAX_Y = 620;
 
-  var similarPinsTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
   window.pins = {
     pinsData: [],
+    similarPinsTemplate: document.querySelector('#pin').content.querySelector('.map__pin'),
 
     createPins: function (array, pinsQuantity) {
 
@@ -19,10 +19,9 @@
 
       var fragment = document.createDocumentFragment();
       for (var i = 0; i < window.pins.pinsData.length; i++) {
-        var pinsElement = similarPinsTemplate.cloneNode(true);
+        var pinsElement = window.pins.similarPinsTemplate.cloneNode(true);
         pinsElement.style = 'left: ' + parseInt(window.pins.pinsData[i].location.x, 10) + 'px; top: ' + parseInt(window.pins.pinsData[i].location.y, 10) + 'px';
         pinsElement.querySelector('img').src = array[i].author.avatar;
-        pinsElement.classList.add('user__pin');
         pinsElement.id = i;
         pinsElement.alt = 'Метка объявления';
 
