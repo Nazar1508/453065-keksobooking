@@ -93,12 +93,4 @@
   };
 
   errorButton.addEventListener('click', closeErrorButton);
-  //   error.classList.add('hidden');
-  // });
-  // document.addEventListener('keydown', function (evt) {
-  //   if (evt.keyCode === 27) {
-  //     error.classList.add('hidden');
-  //   }
-  // });
-
 })();

@@ -4,7 +4,9 @@
 
   var DEBOUNCE_INTERVAL = 500;
   var lastTimeout;
+  var pinsElement;
   window.data = {
+    pinsElement: pinsElement,
 
     debounce: function (fun, filteredPins) {
       if (lastTimeout) {
@@ -44,6 +46,13 @@
         featuresFragment.appendChild(featuresItem);
       }
       return featuresFragment;
-    }
+    },
+
+    // Создаем функцию для удаления дочерних элементов?
+    removeChild: function (element) {
+      while (element.firstChild) {
+        element.removeChild(element.firstChild);
+      }
+    },
   };
 })();

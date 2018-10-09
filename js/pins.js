@@ -16,16 +16,18 @@
       window.pins.pinsData = array.sort(window.data.sortElements).filter(function (pin, index) {
         return index < pinsQuantity;
       });
-
       var fragment = document.createDocumentFragment();
       for (var i = 0; i < window.pins.pinsData.length; i++) {
-        var pinsElement = window.pins.similarPinsTemplate.cloneNode(true);
-        pinsElement.style = 'left: ' + parseInt(window.pins.pinsData[i].location.x, 10) + 'px; top: ' + parseInt(window.pins.pinsData[i].location.y, 10) + 'px';
-        pinsElement.querySelector('img').src = array[i].author.avatar;
-        pinsElement.id = i;
-        pinsElement.alt = 'Метка объявления';
+        var pinRender = function () {
+          var pinsElement = window.pins.similarPinsTemplate.cloneNode(true);
+          pinsElement.style = 'left: ' + parseInt(window.pins.pinsData[i].location.x, 10) + 'px; top: ' + parseInt(window.pins.pinsData[i].location.y, 10) + 'px';
+          pinsElement.querySelector('img').src = window.pins.pinsData[i].author.avatar;
+          pinsElement.id = i;
+          pinsElement.alt = 'Метка объявления';
 
-        fragment.appendChild(pinsElement);
+          fragment.appendChild(pinsElement);
+        };
+        pinRender();
       }
       return fragment;
     },

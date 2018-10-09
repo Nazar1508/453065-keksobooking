@@ -75,4 +75,9 @@
 
   addEventListeners();
 
+  window.images = {
+    imagesContainer: imagesContainer,
+    preview: preview
+  };
+
 })();

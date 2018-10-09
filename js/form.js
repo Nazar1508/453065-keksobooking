@@ -2,6 +2,8 @@
 
 (function () {
 
+  var PINS_QANTITY = 5;
+
   var MIN_PRICES = {
     bungalo: 0,
     flat: 1000,
@@ -45,12 +47,12 @@
     }
 
     if (window.map.similarPinsElement.querySelectorAll('button').length === 1) {
-      window.map.similarPinsElement.appendChild(window.pins.createPins(window.form.housingData, 5));
+      window.map.similarPinsElement.appendChild(window.pins.createPins(window.form.housingData, PINS_QANTITY));
     }
 
     var successHandlerForPins = function (data) {
       window.form.housingData = data;
-      window.map.similarPinsElement.appendChild(window.pins.createPins(window.form.housingData, 5));
+      window.map.similarPinsElement.appendChild(window.pins.createPins(window.form.housingData, PINS_QANTITY));
     };
 
     if (!window.form.housingData.length) {
@@ -185,6 +187,10 @@
     window.pins.removePins();
 
     window.card.removeCard();
+
+    window.data.removeChild(window.images.imagesContainer);
+
+    window.images.preview.src = 'img/muffin-grey.svg';
 
     form.querySelector('#type')[0].selected = true;
     form.querySelector('#price').value = '';

@@ -41,20 +41,6 @@
       cardElement.querySelector('.popup__photos').style.display = 'none';
       if (array.offer.photos.length !== 0) {
         cardElement.querySelector('.popup__photos').style.display = 'flex';
-
-        // window.card.cardElement.classList.remove('hidden');
-        // var popupClose = document.querySelector('.popup__close');
-        // var onPopupClick = function () {
-        //   window.card.cardElement.classList.add('hidden');
-        // };
-
-        // popupClose.addEventListener('click', onPopupClick);
-
-        // document.addEventListener('keydown', function (evt) {
-        //   if (evt.keyCode === 27) {
-        //     window.card.cardElement.classList.add('hidden');
-        //   }
-        // });
       }
 
       return cardElement;

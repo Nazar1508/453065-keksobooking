@@ -68,9 +68,12 @@
       return filteredPins.filter(function (pin) {
         var keyInPin;
         for (var i = 0; i < pin.offer.features.length; i++) {
-          if (pin.offer.features[i] === filters[key]) {
-            keyInPin = true;
-          }
+          var pinValue = function () {
+            if (pin.offer.features[i] === filters[key]) {
+              keyInPin = true;
+            }
+          };
+          pinValue();
         }
         return keyInPin;
       });
