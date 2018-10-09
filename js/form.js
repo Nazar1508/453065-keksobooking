@@ -2,44 +2,75 @@
 
 (function () {
 
-  var housingData = [];
-
-  window.form = {
-    housingData: housingData
+  var MIN_PRICES = {
+    bungalo: 0,
+    flat: 1000,
+    house: 5000,
+    palace: 10000
   };
 
   var form = document.querySelector('.ad-form');
-  var addFormElements = document.querySelectorAll('fieldset, select');
+  var map = document.querySelector('.map');
+  var mapFilters = document.querySelector('.map__filters');
+  var addFormElements = form.querySelectorAll('fieldset, select');
+  var filtersFormElements = mapFilters.querySelectorAll('fieldset, select');
   var mapPinActive = document.querySelector('.map__pin--main');
-  form.querySelector('.ad-form__element:nth-child(3) input').value = parseInt(mapPinActive.style.top, 15) + ', ' + parseInt(mapPinActive.style.left, 15);
+  var mapPinAddress = form.querySelector('#address');
+  var housingData = [];
+
+  window.form = {
+    housingData: housingData,
+
+    showAddress: function () {
+      mapPinAddress.value = parseInt(mapPinActive.style.left, 10) + ', ' + parseInt(mapPinActive.style.top, 10);
+    },
+
+    activateForm: function () {
+      for (var i = 0; i < filtersFormElements.length; i++) {
+        filtersFormElements[i].disabled = false;
+      }
+    }
+  };
+
+  window.form.showAddress();
 
   mapPinActive.addEventListener('mouseup', function () {
-    document.querySelector('.map').classList.remove('map--faded');
+    map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
 
-    form.querySelector('.ad-form__element:nth-child(3) input').value = parseInt(mapPinActive.style.top, 10) + ', ' + parseInt(mapPinActive.style.left, 10);
+    window.form.showAddress();
 
     for (var i = 0; i < addFormElements.length; i++) {
       addFormElements[i].disabled = false;
     }
 
+    if (window.map.similarPinsElement.querySelectorAll('button').length === 1) {
+      window.map.similarPinsElement.appendChild(window.pins.createPins(window.form.housingData, 5));
+    }
 
     var successHandlerForPins = function (data) {
       window.form.housingData = data;
       window.map.similarPinsElement.appendChild(window.pins.createPins(window.form.housingData, 5));
     };
 
-    window.backend.download(successHandlerForPins, window.error.errorHandler);
+    if (!window.form.housingData.length) {
+      window.backend.download(successHandlerForPins, window.error.errorHandler);
+    }
+
 
   });
 
   mapPinActive.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
     var startPositin = {
       x: evt.clientX,
       y: evt.clientY
     };
 
     var onMouseMove = function (moveEvent) {
+      moveEvent.preventDefault();
+
       var changePosition = {
         x: startPositin.x - moveEvent.clientX,
         y: startPositin.y - moveEvent.clientY,
@@ -69,7 +100,9 @@
       coordinateLimits();
     };
 
-    var onMouseUp = function () {
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
@@ -114,12 +147,6 @@
     }
   });
 
-  var MIN_PRICES = {
-    bungalo: 0,
-    flat: 1000,
-    house: 5000,
-    palace: 10000
-  };
 
   var inputMinPrice = form.querySelector('#price');
 
@@ -127,6 +154,7 @@
   flatTypeSelect.addEventListener('change', function () {
     var flatType = flatTypeSelect.value;
     inputMinPrice.min = MIN_PRICES[flatType];
+    inputMinPrice.placeholder = MIN_PRICES[flatType];
   });
 
   var timeOfArrival = form.querySelector('#timein');
@@ -148,6 +176,8 @@
     document.querySelector('.map__pin--main').style.left = '570px';
     document.querySelector('.map__pin--main').style.top = '375px';
 
+    document.querySelector('#address').value = '570, 375';
+
     for (var n = 0; n < addFormElements.length; n++) {
       addFormElements[n].disabled = true;
     }
@@ -156,15 +186,15 @@
 
     window.card.removeCard();
 
-    form.querySelector('#type').selected = true;
+    form.querySelector('#type')[0].selected = true;
     form.querySelector('#price').value = '';
-    form.querySelector('#price').placeholder = 500;
+    form.querySelector('#price').placeholder = 0;
     form.querySelector('#title').value = '';
     form.querySelector('#timein').value = '12:00';
     form.querySelector('#timeout').value = form.querySelector('#timein').value;
     form.querySelector('#description').value = '';
 
-    roomCapacity = window.form.querySelector('#capacity');
+    roomCapacity = document.querySelector('#capacity');
     document.querySelector('#room_number').selectedIndex = null;
 
     for (var i = 0; i < roomCapacity.length; i++) {
@@ -176,7 +206,7 @@
       }
     }
 
-    var featuresActive = window.form.querySelectorAll('.feature__checkbox');
+    var featuresActive = document.querySelectorAll('.feature__checkbox');
     [].map.call(featuresActive, function (obj) {
       obj.checked = false;
     });

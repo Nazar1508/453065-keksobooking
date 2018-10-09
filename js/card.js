@@ -13,6 +13,8 @@
 
   window.card = {
 
+    cardElement: cardElement,
+
     createCard: function (array) {
       cardElement.querySelector('img').src = array.author.avatar;
       cardElement.querySelector('.popup__title').textContent = array.offer.title;
@@ -22,25 +24,44 @@
       cardElement.querySelector('.popup__text--capacity').textContent = array.offer.rooms + ' комнаты для ' + array.offer.guests + ' гостей';
       cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + array.offer.checkin + ', ' + 'выезд до ' + array.offer.checkout;
       cardElement.querySelector('.popup__features').textContent = '';
+
+      cardElement.querySelector('.popup__features').appendChild(window.data.createFeatures(array.offer.features));
+
+      cardElement.querySelector('.popup__features').classList.add('hidden');
+
+      if (array.offer.features.length !== 0) {
+        cardElement.querySelector('.popup__features').classList.remove('hidden');
+      }
+
       cardElement.querySelector('.popup__description').textContent = array.offer.description;
       cardElement.querySelector('.popup__photos').textContent = '';
 
-      cardElement.querySelector('.popup__features').appendChild(window.data.createFeatures(array.offer.features));
+
       cardElement.querySelector('.popup__photos').appendChild(window.data.createPhotos(array.offer.photos));
-      cardElement.classList.remove('hidden');
-      cardElement.querySelector('.popup__close').addEventListener('click', function () {
-        cardElement.classList.add('hidden');
-      });
-      document.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === 27) {
-          cardElement.classList.add('hidden');
-        }
-      });
+      cardElement.querySelector('.popup__photos').style.display = 'none';
+      if (array.offer.photos.length !== 0) {
+        cardElement.querySelector('.popup__photos').style.display = 'flex';
+
+        // window.card.cardElement.classList.remove('hidden');
+        // var popupClose = document.querySelector('.popup__close');
+        // var onPopupClick = function () {
+        //   window.card.cardElement.classList.add('hidden');
+        // };
+
+        // popupClose.addEventListener('click', onPopupClick);
+
+        // document.addEventListener('keydown', function (evt) {
+        //   if (evt.keyCode === 27) {
+        //     window.card.cardElement.classList.add('hidden');
+        //   }
+        // });
+      }
+
       return cardElement;
+
     },
 
     removeCard: function () {
-      cardElement.classList.add('hidden');
     }
   };
 })();
