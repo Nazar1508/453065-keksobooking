@@ -26,58 +26,57 @@
   var changeType = function (key, filters) {
     if (filters[key] === 'any') {
       return window.form.housingData;
-    } else {
-      return window.form.housingData.filter(function (pin) {
-        return pin.offer[key] === filters[key];
-      });
     }
+    return window.form.housingData.filter(function (pin) {
+      return pin.offer[key] === filters[key];
+    });
+
   };
 
   var changePrice = function (key, filters) {
     if (filters[key] === 'any') {
       return filteredPins;
-    } else {
-      return filteredPins.filter(function (pin) {
-        var keyInPin;
-        if (filters[key] === 'middle') {
-          keyInPin = pin.offer[key] >= PRICES.low && pin.offer[key] <= PRICES.middle;
-        } else if (filters[key] === 'low') {
-          keyInPin = pin.offer[key] < PRICES.low;
-        } else if (filters[key] === 'high') {
-          keyInPin = pin.offer[key] > PRICES.middle;
-        }
-        return keyInPin;
-      });
     }
+    return filteredPins.filter(function (pin) {
+      var keyInPin;
+      if (filters[key] === 'middle') {
+        keyInPin = pin.offer[key] >= PRICES.low && pin.offer[key] <= PRICES.middle;
+      } else if (filters[key] === 'low') {
+        keyInPin = pin.offer[key] < PRICES.low;
+      } else if (filters[key] === 'high') {
+        keyInPin = pin.offer[key] > PRICES.middle;
+      }
+      return keyInPin;
+    });
+
   };
 
   var changeRoomsAndGuests = function (key, filters) {
     if (filters[key] === 'any') {
       return filteredPins;
-    } else {
-      return filteredPins.filter(function (pin) {
-        return pin.offer[key] === +filters[key];
-      });
     }
+    return filteredPins.filter(function (pin) {
+      return pin.offer[key] === +filters[key];
+    });
   };
 
   var changeFeatures = function (key, filters) {
     if (filters[key] === 'none') {
       return filteredPins;
-    } else {
-      return filteredPins.filter(function (pin) {
-        var keyInPin;
-        for (var i = 0; i < pin.offer.features.length; i++) {
-          var pinValue = function () {
-            if (pin.offer.features[i] === filters[key]) {
-              keyInPin = true;
-            }
-          };
-          pinValue();
-        }
-        return keyInPin;
-      });
     }
+    return filteredPins.filter(function (pin) {
+      var keyInPin;
+      for (var i = 0; i < pin.offer.features.length; i++) {
+        var pinValue = function () {
+          if (pin.offer.features[i] === filters[key]) {
+            keyInPin = true;
+          }
+        };
+        pinValue();
+      }
+      return keyInPin;
+    });
+
   };
 
   var mapFilter = function (target, filters) {

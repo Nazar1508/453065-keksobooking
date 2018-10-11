@@ -48,6 +48,7 @@
     },
 
     removeCard: function () {
+      cardElement.classList.add('hidden');
     }
   };
 })();

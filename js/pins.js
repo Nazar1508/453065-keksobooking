@@ -5,29 +5,31 @@
   var MAX_X = 1136;
   var MIN_Y = 100;
   var MAX_Y = 620;
-
+  var fragment;
 
   window.pins = {
-    pinsData: [],
+    infoOfpins: [],
     similarPinsTemplate: document.querySelector('#pin').content.querySelector('.map__pin'),
+
+    renderPinItem: function (element, i) {
+      var pinsElement = window.pins.similarPinsTemplate.cloneNode(true);
+      pinsElement.style.left = parseInt(element.location.x, 10) + 'px';
+      pinsElement.style.top = parseInt(element.location.y, 10) + 'px';
+      pinsElement.querySelector('img').src = element.author.avatar;
+      pinsElement.id = i;
+      pinsElement.alt = 'Метка объявления';
+
+      fragment.appendChild(pinsElement);
+    },
 
     createPins: function (array, pinsQuantity) {
 
-      window.pins.pinsData = array.sort(window.data.sortElements).filter(function (pin, index) {
+      window.pins.infoOfpins = array.sort(window.data.sortElements).filter(function (pin, index) {
         return index < pinsQuantity;
       });
-      var fragment = document.createDocumentFragment();
-      for (var i = 0; i < window.pins.pinsData.length; i++) {
-        var pinRender = function () {
-          var pinsElement = window.pins.similarPinsTemplate.cloneNode(true);
-          pinsElement.style = 'left: ' + parseInt(window.pins.pinsData[i].location.x, 10) + 'px; top: ' + parseInt(window.pins.pinsData[i].location.y, 10) + 'px';
-          pinsElement.querySelector('img').src = window.pins.pinsData[i].author.avatar;
-          pinsElement.id = i;
-          pinsElement.alt = 'Метка объявления';
-
-          fragment.appendChild(pinsElement);
-        };
-        pinRender();
+      fragment = document.createDocumentFragment();
+      for (var i = 0; i < window.pins.infoOfpins.length; i++) {
+        window.pins.renderPinItem(window.pins.infoOfpins[i], i);
       }
       return fragment;
     },

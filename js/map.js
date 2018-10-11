@@ -37,11 +37,12 @@
     var target = evt.target;
 
     if (target.tagName === 'BUTTON' && target.className !== 'map__pin map__pin--main') {
-      showTheCard(window.pins.pinsData[target.id]);
+      showTheCard(window.pins.infoOfpins[target.id]);
+      openCard();
     } else if (target.tagName === 'IMG' && target.parentElement.className !== 'map__pin map__pin--main') {
-      showTheCard(window.pins.pinsData[target.parentElement.id]);
+      showTheCard(window.pins.infoOfpins[target.parentElement.id]);
+      openCard();
     }
-    openCard();
   });
 
   closePopup.addEventListener('click', function () {

@@ -34,9 +34,9 @@
     }
   });
 
-  var imagesHandler = function () {
+  var onImagesChange = function () {
     var filesNames = [];
-    [].forEach.call(imagesChooser.files, function (item) {
+    [].map.call(imagesChooser.files, function (item) {
       filesNames.push(item.name.toLowerCase());
     });
 
@@ -51,7 +51,7 @@
       }
     }
 
-    [].forEach.call(imagesChooser.files, function (item) {
+    [].map.call(imagesChooser.files, function (item) {
       var file = item;
       var reader = new FileReader();
 
@@ -70,7 +70,7 @@
   };
 
   var addEventListeners = function () {
-    imagesChooser.addEventListener('change', imagesHandler);
+    imagesChooser.addEventListener('change', onImagesChange);
   };
 
   addEventListeners();

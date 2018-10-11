@@ -121,31 +121,34 @@
 
   roomNumber.addEventListener('click', function () {
     for (var i = 0; i < roomNumber.length; i++) {
-      if (roomNumberElement[i].selected && roomNumberElement[i].value === '1') {
-        roomCapacity[0].disabled = true;
-        roomCapacity[1].disabled = true;
-        roomCapacity[2].disabled = false;
-        roomCapacity[3].disabled = true;
-        roomCapacity[2].selected = 'true';
-      } else if (roomNumberElement[i].selected && roomNumberElement[i].value === '2') {
-        roomCapacity[0].disabled = true;
-        roomCapacity[1].disabled = false;
-        roomCapacity[2].disabled = false;
-        roomCapacity[3].disabled = true;
-        roomCapacity[2].selected = 'true';
-      } else if (roomNumberElement[i].selected && roomNumberElement[i].value === '3') {
-        roomCapacity[0].disabled = false;
-        roomCapacity[1].disabled = false;
-        roomCapacity[2].disabled = false;
-        roomCapacity[3].disabled = true;
-        roomCapacity[2].selected = 'true';
-      } else if (roomNumberElement[i].selected && roomNumberElement[i].value === '100') {
-        roomCapacity[0].disabled = true;
-        roomCapacity[1].disabled = true;
-        roomCapacity[2].disabled = true;
-        roomCapacity[3].disabled = false;
-        roomCapacity[3].selected = 'true';
-      }
+      var changeRoomCapacity = function () {
+        if (roomNumberElement[i].selected && roomNumberElement[i].value === '1') {
+          roomCapacity[0].disabled = true;
+          roomCapacity[1].disabled = true;
+          roomCapacity[2].disabled = false;
+          roomCapacity[3].disabled = true;
+          roomCapacity[2].selected = 'true';
+        } else if (roomNumberElement[i].selected && roomNumberElement[i].value === '2') {
+          roomCapacity[0].disabled = true;
+          roomCapacity[1].disabled = false;
+          roomCapacity[2].disabled = false;
+          roomCapacity[3].disabled = true;
+          roomCapacity[2].selected = 'true';
+        } else if (roomNumberElement[i].selected && roomNumberElement[i].value === '3') {
+          roomCapacity[0].disabled = false;
+          roomCapacity[1].disabled = false;
+          roomCapacity[2].disabled = false;
+          roomCapacity[3].disabled = true;
+          roomCapacity[2].selected = 'true';
+        } else if (roomNumberElement[i].selected && roomNumberElement[i].value === '100') {
+          roomCapacity[0].disabled = true;
+          roomCapacity[1].disabled = true;
+          roomCapacity[2].disabled = true;
+          roomCapacity[3].disabled = false;
+          roomCapacity[3].selected = 'true';
+        }
+      };
+      changeRoomCapacity();
     }
   });
 
@@ -171,14 +174,16 @@
   });
 
   var resetForm = function () {
+    var flatTitle = form.querySelector('#title');
+    var flatDescription = form.querySelector('#description');
 
-    document.querySelector('.map').classList.add('map--faded');
+    map.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
 
-    document.querySelector('.map__pin--main').style.left = '570px';
-    document.querySelector('.map__pin--main').style.top = '375px';
+    mapPinActive.style.left = '570px';
+    mapPinActive.style.top = '375px';
 
-    document.querySelector('#address').value = '570, 375';
+    mapPinAddress.value = '570, 375';
 
     for (var n = 0; n < addFormElements.length; n++) {
       addFormElements[n].disabled = true;
@@ -192,16 +197,16 @@
 
     window.images.preview.src = 'img/muffin-grey.svg';
 
-    form.querySelector('#type')[0].selected = true;
-    form.querySelector('#price').value = '';
-    form.querySelector('#price').placeholder = 0;
-    form.querySelector('#title').value = '';
-    form.querySelector('#timein').value = '12:00';
-    form.querySelector('#timeout').value = form.querySelector('#timein').value;
-    form.querySelector('#description').value = '';
+    flatTypeSelect[0].selected = true;
+    inputMinPrice.value = '';
+    inputMinPrice.placeholder = 0;
+    flatTitle.value = '';
+    timeOfArrival.value = '12:00';
+    timeOfdeparture.value = timeOfArrival.value;
+    flatDescription.value = '';
 
     roomCapacity = document.querySelector('#capacity');
-    document.querySelector('#room_number').selectedIndex = null;
+    roomNumber.selectedIndex = null;
 
     for (var i = 0; i < roomCapacity.length; i++) {
       if (roomCapacity[i].value === '1') {

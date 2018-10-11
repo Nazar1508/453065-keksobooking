@@ -4,10 +4,10 @@
 
   var DEBOUNCE_INTERVAL = 500;
   var lastTimeout;
-  var pinsElement;
-  window.data = {
-    pinsElement: pinsElement,
+  var featuresFragment;
+  var photosFragment;
 
+  window.data = {
     debounce: function (fun, filteredPins) {
       if (lastTimeout) {
         window.clearTimeout(lastTimeout);
@@ -22,28 +22,46 @@
       return 0.5 - Math.random();
     },
 
+    pinRender: function (element, i) {
+      var pinsElement = window.pins.similarPinsTemplate.cloneNode(true);
+      pinsElement.style = 'left: ' + parseInt(element.location.x, 10) + 'px; top: ' + parseInt(element.location.y, 10) + 'px';
+      pinsElement.querySelector('img').src = element.author.avatar;
+      pinsElement.id = i;
+      pinsElement.alt = 'Метка объявления';
+
+      window.data.fragment.appendChild(pinsElement);
+    },
+
     // Создаем функцию для добавления img в DOM
+    renderPhotoItem: function (element) {
+      var photo = document.createElement('img');
+      photo.className = 'popup__photo';
+      photo.src = element;
+      photo.width = '45';
+      photo.height = '40';
+      photo.alt = 'Фотография жилья';
+      photosFragment.appendChild(photo);
+    },
+
     createPhotos: function (array) {
-      var photosFragment = document.createDocumentFragment();
+      photosFragment = document.createDocumentFragment();
       for (var i = 0; i < array.length; i++) {
-        var photo = document.createElement('img');
-        photo.className = 'popup__photo';
-        photo.src = array[i];
-        photo.width = '45';
-        photo.height = '40';
-        photo.alt = 'Фотография жилья';
-        photosFragment.appendChild(photo);
+        window.data.renderPhotoItem(array[i]);
       }
       return photosFragment;
     },
 
     // Создаем функцию для добавления li в DOM
+    renderFeaturesItem: function (element) {
+      var featuresItem = document.createElement('li');
+      featuresItem.className = 'popup__feature popup__feature--' + element;
+      featuresFragment.appendChild(featuresItem);
+    },
+
     createFeatures: function (array) {
-      var featuresFragment = document.createDocumentFragment();
+      featuresFragment = document.createDocumentFragment();
       for (var i = 0; i < array.length; i++) {
-        var featuresItem = document.createElement('li');
-        featuresItem.className = 'popup__feature popup__feature--' + array[i];
-        featuresFragment.appendChild(featuresItem);
+        window.data.renderFeaturesItem(array[i]);
       }
       return featuresFragment;
     },

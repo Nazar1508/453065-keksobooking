@@ -10,6 +10,8 @@
 
   var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
+    var unknownStatusErrorMessage = 'Не известный статус: ' + xhr.status + ' ' + xhr.statusText;
+    var timeoutErrorMessage = 'Запрос не успел выполниться за ' + xhr.timeout + 'мс';
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
@@ -17,16 +19,16 @@
         openSuccess();
         onLoad(xhr.response);
       } else {
-        onError('Не известный статус: ' + xhr.status + ' ' + xhr.statusText);
+        onError();
       }
     });
 
     xhr.addEventListener('error', function () {
-      onError(openErrorButton());
+      onError(openErrorButton(unknownStatusErrorMessage));
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError(timeoutErrorMessage);
     });
 
     xhr.timeout = 10000;
@@ -36,6 +38,7 @@
 
   var download = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
+    var connectionsErrorMessage = 'Произошла ошибка соединения';
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
@@ -44,7 +47,7 @@
     });
 
     xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
+      onError(connectionsErrorMessage);
     });
 
     xhr.timeout = 10000;
@@ -65,7 +68,6 @@
 
   var openSuccess = function () {
     successSend.classList.remove('hidden');
-
     document.addEventListener('keydown', onSuccessEscPress);
   };
 
@@ -74,7 +76,9 @@
     document.removeEventListener('keydown', onSuccessEscPress);
   };
 
-  successSend.addEventListener('click', closeSuccess);
+  successSend.addEventListener('click', function () {
+    closeSuccess();
+  });
 
   var onErrorEscPress = function (evt) {
     if (evt.keyCode === window.map.ESC_KEYCODE) {
@@ -92,5 +96,8 @@
     document.removeEventListener('keydown', onErrorEscPress);
   };
 
-  errorButton.addEventListener('click', closeErrorButton);
+  errorButton.addEventListener('click', function () {
+    closeErrorButton();
+  });
+
 })();
