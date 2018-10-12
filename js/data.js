@@ -7,6 +7,17 @@
   var featuresFragment;
   var photosFragment;
 
+  // Создаем функцию для добавления img в DOM
+  var renderPhotoItem = function (element) {
+    var photo = document.createElement('img');
+    photo.className = 'popup__photo';
+    photo.src = element;
+    photo.width = '45';
+    photo.height = '40';
+    photo.alt = 'Фотография жилья';
+    photosFragment.appendChild(photo);
+  };
+
   window.data = {
     debounce: function (fun, filteredPins) {
       if (lastTimeout) {
@@ -32,21 +43,11 @@
       window.data.fragment.appendChild(pinsElement);
     },
 
-    // Создаем функцию для добавления img в DOM
-    renderPhotoItem: function (element) {
-      var photo = document.createElement('img');
-      photo.className = 'popup__photo';
-      photo.src = element;
-      photo.width = '45';
-      photo.height = '40';
-      photo.alt = 'Фотография жилья';
-      photosFragment.appendChild(photo);
-    },
 
     createPhotos: function (array) {
       photosFragment = document.createDocumentFragment();
       for (var i = 0; i < array.length; i++) {
-        window.data.renderPhotoItem(array[i]);
+        renderPhotoItem(array[i]);
       }
       return photosFragment;
     },

@@ -7,20 +7,20 @@
   var MAX_Y = 620;
   var fragment;
 
+  var renderPinItem = function (element, i) {
+    var pinsElement = window.pins.similarPinsTemplate.cloneNode(true);
+    pinsElement.style.left = parseInt(element.location.x, 10) + 'px';
+    pinsElement.style.top = parseInt(element.location.y, 10) + 'px';
+    pinsElement.querySelector('img').src = element.author.avatar;
+    pinsElement.id = i;
+    pinsElement.alt = 'Метка объявления';
+
+    fragment.appendChild(pinsElement);
+  };
+
   window.pins = {
     infoOfpins: [],
     similarPinsTemplate: document.querySelector('#pin').content.querySelector('.map__pin'),
-
-    renderPinItem: function (element, i) {
-      var pinsElement = window.pins.similarPinsTemplate.cloneNode(true);
-      pinsElement.style.left = parseInt(element.location.x, 10) + 'px';
-      pinsElement.style.top = parseInt(element.location.y, 10) + 'px';
-      pinsElement.querySelector('img').src = element.author.avatar;
-      pinsElement.id = i;
-      pinsElement.alt = 'Метка объявления';
-
-      fragment.appendChild(pinsElement);
-    },
 
     createPins: function (array, pinsQuantity) {
 
@@ -29,7 +29,7 @@
       });
       fragment = document.createDocumentFragment();
       for (var i = 0; i < window.pins.infoOfpins.length; i++) {
-        window.pins.renderPinItem(window.pins.infoOfpins[i], i);
+        renderPinItem(window.pins.infoOfpins[i], i);
       }
       return fragment;
     },

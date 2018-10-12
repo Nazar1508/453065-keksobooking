@@ -10,8 +10,6 @@
 
   var upload = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
-    var unknownStatusErrorMessage = 'Не известный статус: ' + xhr.status + ' ' + xhr.statusText;
-    var timeoutErrorMessage = 'Запрос не успел выполниться за ' + xhr.timeout + 'мс';
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
@@ -24,10 +22,12 @@
     });
 
     xhr.addEventListener('error', function () {
+      var unknownStatusErrorMessage = 'Не известный статус: ' + xhr.status + ' ' + xhr.statusText;
       onError(openErrorButton(unknownStatusErrorMessage));
     });
 
     xhr.addEventListener('timeout', function () {
+      var timeoutErrorMessage = 'Запрос не успел выполниться за ' + xhr.timeout + 'мс';
       onError(timeoutErrorMessage);
     });
 

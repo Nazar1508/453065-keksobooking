@@ -9,11 +9,13 @@
   var preview = document.querySelector('.ad-form-header__preview img');
   var imagesContainer = document.querySelector('.ad-form__photo');
 
-  imagesContainer.style.width = 'auto';
-  imagesContainer.style.height = 'auto';
-  imagesContainer.style.display = 'flex';
-  imagesContainer.style.flexWrap = 'wrap';
-
+  var imagesContainerStyle = function () {
+    imagesContainer.style.width = 'auto';
+    imagesContainer.style.height = 'auto';
+    imagesContainer.style.display = 'flex';
+    imagesContainer.style.flexWrap = 'wrap';
+  };
+  imagesContainerStyle();
 
   fileChooser.addEventListener('change', function () {
     var file = fileChooser.files[0];
@@ -36,19 +38,22 @@
 
   var onImagesChange = function () {
     var filesNames = [];
-    [].map.call(imagesChooser.files, function (item) {
-      filesNames.push(item.name.toLowerCase());
+    [].map.call(imagesChooser, function (item) {
+      return item.textContent;
     });
 
-    for (var i = 0; i < filesNames.length; i++) {
+    var newImage = function (index) {
       var isImage = FILE_TYPES.some(function (item) {
-        return filesNames[i].endsWith(item);
+        return filesNames[index].endsWith(item);
       });
 
       if (!isImage) {
         window.error.errorHandler('Только изображения ' + FILE_TYPES);
-        break;
       }
+    };
+
+    for (var i = 0; i < filesNames.length; i++) {
+      newImage(i);
     }
 
     [].map.call(imagesChooser.files, function (item) {

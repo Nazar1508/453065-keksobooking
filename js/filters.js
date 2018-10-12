@@ -5,7 +5,7 @@
 
   var filteredPins = [];
 
-  var filterData = {
+  var FILTER_DATA = {
     type: 'any',
     price: 'any',
     rooms: 'any',
@@ -25,9 +25,9 @@
 
   var changeType = function (key, filters) {
     if (filters[key] === 'any') {
-      return window.form.housingData;
+      return window.form.dataAboutHouses;
     }
-    return window.form.housingData.filter(function (pin) {
+    return window.form.dataAboutHouses.filter(function (pin) {
       return pin.offer[key] === filters[key];
     });
 
@@ -66,12 +66,12 @@
     }
     return filteredPins.filter(function (pin) {
       var keyInPin;
+      var pinValue = function () {
+        if (pin.offer.features[i] === filters[key]) {
+          keyInPin = true;
+        }
+      };
       for (var i = 0; i < pin.offer.features.length; i++) {
-        var pinValue = function () {
-          if (pin.offer.features[i] === filters[key]) {
-            keyInPin = true;
-          }
-        };
         pinValue();
       }
       return keyInPin;
@@ -110,12 +110,12 @@
   var filteringToPins = function (pins) {
     window.card.removeCard();
     window.pins.removePins();
-    window.map.similarPinsElement.appendChild(window.pins.createPins(pins, 5));
+    window.map.similarPinsElement.appendChild(window.pins.createPins(pins, window.form.PINS_QANTITY));
   };
 
   mapFilters.addEventListener('change', function (evt) {
     var target = evt.target;
-    mapFilter(target, filterData);
+    mapFilter(target, FILTER_DATA);
     if (target.tagName === 'SELECT' || target.tagName === 'INPUT') {
       window.data.debounce(filteringToPins, filteredPins);
     }

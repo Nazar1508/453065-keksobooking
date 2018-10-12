@@ -4,11 +4,7 @@
 
   var map = document.querySelector('.map');
   var similarPinsElement = document.querySelector('.map__pins');
-
-  window.map = {
-    similarPinsElement: similarPinsElement,
-    ESC_KEYCODE: 27
-  };
+  var ESC_KEYCODE = 27;
 
   var showTheCard = function (obj) {
     map.appendChild(window.card.createCard(obj));
@@ -17,7 +13,7 @@
   var closePopup = window.card.cardElement.querySelector('.popup__close');
 
   var onPopupEscPress = function (evt) {
-    if (evt.keyCode === window.map.ESC_KEYCODE) {
+    if (evt.keyCode === ESC_KEYCODE) {
       closeCard();
     }
   };
@@ -48,4 +44,9 @@
   closePopup.addEventListener('click', function () {
     closeCard();
   });
+
+  window.map = {
+    similarPinsElement: similarPinsElement,
+    ESC_KEYCODE: 27
+  };
 })();
