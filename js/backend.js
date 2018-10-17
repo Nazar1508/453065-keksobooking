@@ -19,11 +19,15 @@
       } else {
         onError();
       }
+
+      if (xhr.status === 500) {
+        onError(openErrorButton());
+      }
     });
 
     xhr.addEventListener('error', function () {
       var unknownStatusErrorMessage = 'Не известный статус: ' + xhr.status + ' ' + xhr.statusText;
-      onError(openErrorButton(unknownStatusErrorMessage));
+      onError(unknownStatusErrorMessage);
     });
 
     xhr.addEventListener('timeout', function () {
@@ -97,6 +101,10 @@
   };
 
   errorButton.addEventListener('click', function () {
+    closeErrorButton();
+  });
+
+  error.addEventListener('click', function () {
     closeErrorButton();
   });
 

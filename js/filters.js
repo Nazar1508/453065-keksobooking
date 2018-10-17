@@ -73,6 +73,9 @@
       };
       for (var i = 0; i < pin.offer.features.length; i++) {
         pinValue();
+        if (keyInPin === true) {
+          break;
+        }
       }
       return keyInPin;
     });
@@ -85,23 +88,26 @@
       filterKey = target.id.replace('filter-', '');
       if (filters[filterKey] === 'none') {
         filters[filterKey] = filterKey;
-      } else {
-        filters[filterKey] = 'none';
       }
-    } else {
-      filterKey = target.id.replace('housing-', '');
-      filters[filterKey] = target.value;
+      filters[filterKey] = 'none';
     }
+    filterKey = target.id.replace('housing-', '');
+    filters[filterKey] = target.value;
 
     Object.keys(filters).forEach(function (key) {
-      if (key === 'type') {
-        filteredPins = changeType(key, filters);
-      } else if (key === 'price') {
-        filteredPins = changePrice(key, filters);
-      } else if (key === 'rooms' || key === 'guests') {
-        filteredPins = changeRoomsAndGuests(key, filters);
-      } else {
-        filteredPins = changeFeatures(key, filters);
+      switch (key) {
+        case 'type':
+          filteredPins = changeType(key, filters);
+          break;
+        case 'price':
+          filteredPins = changePrice(key, filters);
+          break;
+        case 'rooms':
+        case 'guests':
+          filteredPins = changeRoomsAndGuests(key, filters);
+          break;
+        default:
+          filteredPins = changeFeatures(key, filters);
       }
     });
     return filteredPins;

@@ -8,6 +8,7 @@
 
   var preview = document.querySelector('.ad-form-header__preview img');
   var imagesContainer = document.querySelector('.ad-form__photo');
+  var filesNames;
 
   var imagesContainerStyle = function () {
     imagesContainer.style.width = 'auto';
@@ -36,21 +37,21 @@
     }
   });
 
+  var newImage = function (index) {
+    var isImage = FILE_TYPES.some(function (item) {
+      return filesNames[index].endsWith(item);
+    });
+
+    if (!isImage) {
+      window.error.errorHandler('Только изображения ' + FILE_TYPES);
+    }
+  };
+
   var onImagesChange = function () {
-    var filesNames = [];
+    filesNames = [];
     [].map.call(imagesChooser, function (item) {
       return item.textContent;
     });
-
-    var newImage = function (index) {
-      var isImage = FILE_TYPES.some(function (item) {
-        return filesNames[index].endsWith(item);
-      });
-
-      if (!isImage) {
-        window.error.errorHandler('Только изображения ' + FILE_TYPES);
-      }
-    };
 
     for (var i = 0; i < filesNames.length; i++) {
       newImage(i);

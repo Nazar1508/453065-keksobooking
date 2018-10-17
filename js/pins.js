@@ -2,9 +2,9 @@
 
 (function () {
   var MIN_X = 0;
-  var MAX_X = 1136;
-  var MIN_Y = 100;
-  var MAX_Y = 620;
+  var MAX_X = 1138;
+  var MIN_Y = 46;
+  var MAX_Y = 546;
   var fragment;
 
   var renderPinItem = function (element, i) {

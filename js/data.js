@@ -44,10 +44,10 @@
     },
 
 
-    createPhotos: function (array) {
+    createPhotos: function (data) {
       photosFragment = document.createDocumentFragment();
-      for (var i = 0; i < array.length; i++) {
-        renderPhotoItem(array[i]);
+      for (var i = 0; i < data.length; i++) {
+        renderPhotoItem(data[i]);
       }
       return photosFragment;
     },
